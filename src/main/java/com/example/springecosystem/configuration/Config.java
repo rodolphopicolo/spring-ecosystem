@@ -1,5 +1,7 @@
 package com.example.springecosystem.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.availability.AvailabilityState;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Config {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("${name}")
     private String appName;
@@ -22,8 +26,9 @@ public class Config {
     public void onStateChange(AvailabilityChangeEvent event){
         AvailabilityState state = (event.getState());
         if (state.equals(ReadinessState.ACCEPTING_TRAFFIC)){
-            System.out.println("Property value: $(name): " + appName);
-            System.out.println("Property value: $(app.profile): " + appProfile);
+
+            logger.info("Property value: $(name): {}", appName);
+            logger.info("Property value: $(profile): {}", appProfile);
         }
 
     }
