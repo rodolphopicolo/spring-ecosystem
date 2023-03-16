@@ -1,0 +1,32 @@
+<!--
+    LogBack defaults:
+
+    https://github.com/spring-projects/spring-boot/blob/main/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml
+
+    https://github.com/spring-projects/spring-boot/blob/main/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/console-appender.xml
+-->
+
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%cyan(%-5level)] [%level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.example.springecosystem.logging.LoggingController" level="DEBUG" />
+    <logger name="com.example.springecosystem.logging.LoggingController-2" level="WARN" />
+
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+        <!--
+        <appender-ref ref="STDOUT" />
+        -->
+    </root>
+
+
+</configuration>
