@@ -72,3 +72,5 @@ Override db.username with the environment variable value:
 
 Logging environment: ElasticSearch, Logstash and Kibana (ELK Stack)
 How to configure LogBack to send logs to ElasticSearch using Logstash and visualizing thru Kibana?
+
+When working with security, see how to handle the access denied: https://www.baeldung.com/exception-handling-for-rest-with-spring#denied

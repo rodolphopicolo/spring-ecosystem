@@ -12,6 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/shape")
 public class ShapeController {
 
+    /**
+     *
+
+     curl --location 'localhost:8080/shape/new' \
+     --header 'Content-Type: application/json' \
+     --data '{
+     "type":"CIRCLE"
+     , "color":"black"
+     }'
+
+     * @param shape
+     * @return
+     * @throws JsonProcessingException
+     */
     @PostMapping(value = "/new", consumes = {"application/json"})
     public String newShape(@RequestBody Shape shape) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
