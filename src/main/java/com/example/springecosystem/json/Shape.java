@@ -11,6 +11,11 @@ public class Shape {
         this.color = color;
     }
 
+    public Shape(){
+        this.type = null;
+        this.color = null;
+    }
+
     public ShapeType getType() {
         return type;
     }

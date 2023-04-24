@@ -26,11 +26,21 @@ class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        // Any request started with /sec/ will be subordinated to the role USER
+        // Any other request will be permitted.
         http.authorizeRequests()
-                .antMatchers("/customers*")
+                .antMatchers("/security/protected/**")
                 .hasRole("USER")
                 .anyRequest()
                 .permitAll();
+
+        //http.cors().and().csrf().disable();
+
+        //The use of @EnableWebSecurity activates the CSRF check and the posts stop to work.
+        //To make it to work without disable csrf check I would need to use a CSRF Token.
+        http.csrf().disable();
+
         http.oauth2Login()
                 .and()
                 .logout()

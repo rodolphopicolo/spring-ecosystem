@@ -1,37 +1,47 @@
 package com.example.springecosystem.exceptions;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.Instant;
 
 public class CustomErrorBody {
-    private int statusCode;
+    public final int statusCode;
 
-    private String message;
+    public final String message;
 
     public final Instant instant;
 
-    public CustomErrorBody (int statusCode, String message){
+
+    public final String stackTrace;
+
+    public CustomErrorBody (int statusCode, String message, Throwable throwable){
         this.statusCode = statusCode;
         this.message = message;
         this.instant = Instant.now();
+
+        if(throwable != null){
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream printStream = new PrintStream(baos);
+            throwable.printStackTrace(printStream);
+            stackTrace = baos.toString();
+        } else {
+            stackTrace = null;
+        }
     }
 
     public int getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public Instant getInstant() {
         return instant;
+    }
+
+    public String getStackTrace(){
+        return this.stackTrace;
     }
 }

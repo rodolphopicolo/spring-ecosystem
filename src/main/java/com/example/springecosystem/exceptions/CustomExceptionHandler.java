@@ -5,6 +5,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
@@ -24,7 +26,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleControllerCustomException(HttpServletRequest request, Throwable ex) {
         HttpStatus status = getStatus(request);
-        return new ResponseEntity<>(new CustomErrorBody(status.value(), ex.getMessage()), status);
+        CustomErrorBody customErrorBody = new CustomErrorBody(status.value(), ex.getMessage(), ex);
+        return new ResponseEntity<>(customErrorBody, status);
     }
 
 
@@ -32,7 +35,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleControllerException(HttpServletRequest request, Throwable ex) {
         HttpStatus status = getStatus(request);
-        return new ResponseEntity<>(new CustomErrorBody(status.value(), ex.getMessage()), status);
+        CustomErrorBody customErrorBody = new CustomErrorBody(status.value(), ex.getMessage(), ex);
+        return new ResponseEntity<>(customErrorBody, status);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<?> handleControllerThrowable(HttpServletRequest request, Throwable ex) {
+        HttpStatus status = getStatus(request);
+        CustomErrorBody customErrorBody = new CustomErrorBody(status.value(), ex.getMessage(), ex);
+        return new ResponseEntity<>(customErrorBody, status);
     }
 
     @ExceptionHandler({ AccessDeniedException.class })
@@ -63,5 +75,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return (status != null) ? status : HttpStatus.INTERNAL_SERVER_ERROR;
     }
+
+
 
 }
