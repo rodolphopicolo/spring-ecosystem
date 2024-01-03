@@ -33,7 +33,12 @@ https://docs.spring.io/spring-boot/docs/2.5.0/reference/htmlsingle/#features.spr
 
     mvn spring-boot:run -Dspring-boot.run.arguments=--name="My Application Name"
 
+Tenho dúvidas se a linha abaixo funciona
+
     mvn spring-boot:run -Dspring.profiles.active=prod -Dspring-boot.run.arguments=--name="My Application Name"
+
+Acredito que só assim funcione:
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev --name='my app name'"
 
     SPRING_APPLICATION_JSON='{"name":"My Application Name"}' java -jar ./target/spring-ecosystem-0.0.1-SNAPSHOT.jar
 
@@ -99,7 +104,7 @@ this parameter makes the -p parameter, to port forword, useless.
 
 To run with the proper certificate:
 
-    docker run --network host --name mykeycloak mykeycloak start --optimized --https-certificate-file /tls-certificate/certificate.pem --https-certificate-key-file /tls-certificate/key.pem
+    docker run --network host --name mykeycloak mykeycloak start --optimized --https-certificate-file /tls-certificate/certificate.pem --https-certificate-key-file /tls-certificate/key.pemdocker run --network host --name mykeycloak mykeycloak start --optimized --https-certificate-file /tls-certificate/certificate.pem --https-certificate-key-file /tls-certificate/key.pemdocker run --network host --name mykeycloak mykeycloak start --optimized --https-certificate-file /tls-certificate/certificate.pem --https-certificate-key-file /tls-certificate/key.pemdocker run --network host --name mykeycloak mykeycloak start --optimized --https-certificate-file /tls-certificate/certificate.pem --https-certificate-key-file /tls-certificate/key.pem
 
 Keycloak, in production mode, starts over HTTPS, and MUST be accessed with explicit protocol https:
 
